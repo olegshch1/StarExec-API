@@ -1,6 +1,4 @@
 import os
-import pandas
-import numpy as np
 import requests
 from web_manager import web_manager
 
