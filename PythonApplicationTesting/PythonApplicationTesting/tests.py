@@ -1,10 +1,10 @@
 import unittest
-from web_manager import web_manager
+from web_manager import WebManager
 
 class TestWebManager(unittest.TestCase):
 
     def setUp(self):
-        self.manager = web_manager()
+        self.manager = WebManager()
         f = open("Login_info.txt", 'r')
         username, password = f.readline().split()
         f.close()

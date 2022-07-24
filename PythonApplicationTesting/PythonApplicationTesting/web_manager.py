@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
-class web_manager(object):
+class WebManager(object):
     """class provides StarExec API"""
     preffix_url = 'https://www.starexec.org/starexec/secure/'
     preffix_url_for_services = 'https://www.starexec.org/starexec/'
