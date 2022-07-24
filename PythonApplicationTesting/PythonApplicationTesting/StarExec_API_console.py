@@ -12,11 +12,14 @@ def instructions():
           'RemoveSpaces\n',
           'IsSpaceVisible\n',
           'EditSpaceVisibility\n',
+          'DownloadSpace\n',
           'exit\n')
 
 def loop():
     f = open("Login_info.txt", 'r')
     username, password = f.readline().split()
+    space_id = f.readline().split()
+    wm.spaces_ids = space_id
     f.close()
     wm.login(username, password)
 
@@ -40,6 +43,10 @@ def loop():
         if s == 'IsSpaceVisible':
             space_id = input('enter space id: ')
             wm.is_space_visible(space_id)
+
+        if s == 'DownloadSpace':
+            space_id, solvs, benchs, hier = input('enter space id and bools for including solvers, benchs and hierarchy: ').split()
+            wm.download_space(space_id, solvs, benchs, hier)
 
         if s == 'EditSpaceVisibility':
             space_id, hierarchy, makePublic = input('enter space id, hierarchy status and public status: ').split()

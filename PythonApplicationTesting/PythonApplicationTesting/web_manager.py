@@ -5,9 +5,10 @@ class WebManager(object):
     """class provides StarExec API"""
     preffix_url = 'https://www.starexec.org/starexec/secure/'
     preffix_url_for_services = 'https://www.starexec.org/starexec/'
+    spaces_ids = []
 
     def get_user_id(self):
-        self.userId = self.session.get(self.preffix_url_for_services + 'services/users/getid').text
+        self.user_id = self.session.get(self.preffix_url_for_services + 'services/users/getid').text
 
 
     def login(self, username, password):
@@ -21,23 +22,28 @@ class WebManager(object):
         self.get_user_id()
         
 
-    def configure_permissions (self, addBench, addJob, addSolver, addSpace, addUser, removeBench, removeJob, removeSolver, removeSpace, removeUser, isLeader):
+    def configure_permissions (self, add_bench, add_job, 
+                               add_solver, add_space, 
+                               add_user, remove_bench, 
+                               remove_job, remove_solver, 
+                               remove_space, remove_user, 
+                               is_leader):
         """
         Provides permissions for post requests
         All arguments are on/off string type
         """
         self.permissions_dict = {
-                'addBench':addBench, 
-                'addJob':addJob, 
-                'addSolver':addSolver, 
-                'addSpace':addSpace, 
-                'addUser':addUser, 
-                'removeBench':removeBench,
-                'removeJob':removeJob, 
-                'removeSolver':removeSolver, 
-                'removeSpace':removeSpace, 
-                'removeUser':removeUser, 
-                'isLeader':isLeader}
+                'addBench':add_bench, 
+                'addJob':add_job, 
+                'addSolver':add_solver, 
+                'addSpace':add_space, 
+                'addUser':add_user, 
+                'removeBench':remove_bench,
+                'removeJob':remove_job, 
+                'removeSolver':remove_solver, 
+                'removeSpace':remove_space, 
+                'removeUser':remove_user, 
+                'isLeader':is_leader}
 
 #in progress
     def add_space (self, parent_id, name, desc):
@@ -51,7 +57,9 @@ class WebManager(object):
                    'sticky': 'false'}
         response = self.session.post(self.preffix_url + 'add/space', data= payload.update(self.without_keys(self.permissions_dict, ['isLeader'])))
         #response = self.session.post(self.preffix_url + 'add/space', data= payload)
+        #delete print
         print(response.text)
+        #delete print
         print(response.url)
 
     def without_keys(self, dict, keys):
@@ -60,11 +68,10 @@ class WebManager(object):
 
     def logout(self):
         response = self.session.post(self.preffix_url_for_services + 'services/session/logout')
-        #print(response.text)
 
 # in progress
     def get_solvers(self):
-        paramlist = {'id': self.userId}
+        paramlist = {'id': self.user_id}
         response = self.session.get(self.preffix_url + '/details/user.jsp', params=paramlist)
         soup = BeautifulSoup(response.content, 'html.parser', parse_only=SoupStrainer('a'))
         for link in soup:
@@ -74,12 +81,28 @@ class WebManager(object):
 
     def remove_spaces(self, list):
         response = self.session.post(self.preffix_url_for_services + 'services/remove/subspace', data= {'selectedIds[]': list, 'recyclePrims': 'false'})
+        #delete print
         print(response.text)
 
-    def is_space_visible(self, spaceId):
-        response = self.session.post(self.preffix_url_for_services + f'services/space/isSpacePublic/{spaceId}')
-        print(response.text,'\n',response.url)
+    def is_space_visible(self, space_id):
+        response = self.session.post(self.preffix_url_for_services + f'services/space/isSpacePublic/{space_id}')
+        if response.text == '1': return True
+        else: return False
 
-    def edit_space_visibility(self, spaceId, hierarchy, makePublic):
-        response = self.session.post(self.preffix_url_for_services + f'services/space/changePublic/{spaceId}/{hierarchy}/{makePublic}')
-        print(response.text)
+    def edit_space_visibility(self, space_id, hierarchy, make_public):
+        """
+        Change visibility for space and its hierarchy by True/False 
+        """
+        response = self.session.post(self.preffix_url_for_services + f'services/space/changePublic/{space_id}/{hierarchy}/{make_public}')
+
+    def download_space(self, id, include_solvers, include_benchmarks, hierarchy):
+        paramlist = {'type': 'space', 'id': id, 'includesolvers': include_solvers, 'includebenchmarks': include_benchmarks, 'hierarchy': hierarchy}
+        response = self.session.get(self.preffix_url + 'download', params = paramlist, stream = True)
+        response.raise_for_status()
+        with open(f'space {id}.zip', 'wb') as f:
+            for chunk in response.iter_content(chunk_size=5000000000):
+                #delete print
+                print('receiving')
+                f.write(chunk)
+        #delete print
+        print('downloading is done')
