@@ -18,7 +18,7 @@ def loop():
     f = open("Login_info.txt", 'r')
     username, password = f.readline().split()
     f.close()
-    wm.Login(username, password)
+    wm.login(username, password)
 
     instructions()
 
@@ -26,29 +26,29 @@ def loop():
 
     while s != "exit":
         if s == 'AddSpace':
-            wm.Configure_permissions('on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on')
+            wm.configure_permissions('on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on')
             parent_id, name, desc = input('enter parent id, new name and description: ').split()
-            print(wm.Add_space(parent_id, name, desc))
+            print(wm.add_space(parent_id, name, desc))
 
         if s == 'Logout':
-            wm.Logout()
+            wm.logout()
 
         if s == 'RemoveSpaces':
             list = input('enter spaces ids: ').split()
-            wm.RemoveSpaces(list)
+            wm.remove_spaces(list)
 
         if s == 'IsSpaceVisible':
             space_id = input('enter space id: ')
-            wm.IsSpaceVisible(space_id)
+            wm.is_space_visible(space_id)
 
         if s == 'EditSpaceVisibility':
             space_id, hierarchy, makePublic = input('enter space id, hierarchy status and public status: ').split()
-            wm.EditSpaceVisibility(space_id, hierarchy, makePublic)
+            wm.edit_space_visibility(space_id, hierarchy, makePublic)
 
         if s == 'GetSolvers':
-            wm.GetSolvers()
+            wm.get_solvers()
 
         s = input("execute one of the following commands: ")
-    wm.Logout()
+    wm.logout()
                        
 loop()

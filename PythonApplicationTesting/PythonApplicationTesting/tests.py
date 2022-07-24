@@ -8,7 +8,7 @@ class TestWebManager(unittest.TestCase):
         f = open("Login_info.txt", 'r')
         username, password = f.readline().split()
         f.close()
-        self.manager.Login(username, password)
+        self.manager.login(username, password)
 
     def test_Login(self):
         self.assertEqual(self.manager.userId, '1394')

@@ -6,11 +6,11 @@ class WebManager(object):
     preffix_url = 'https://www.starexec.org/starexec/secure/'
     preffix_url_for_services = 'https://www.starexec.org/starexec/'
 
-    def GetUserId(self):
+    def get_user_id(self):
         self.userId = self.session.get(self.preffix_url_for_services + 'services/users/getid').text
 
 
-    def Login(self, username, password):
+    def login(self, username, password):
         """
         Login and getting user's ID on StarExec platform
         """
@@ -18,10 +18,10 @@ class WebManager(object):
         response = self.session.get(self.preffix_url + 'index.jsp')
         response = self.session.post(self.preffix_url + 'j_security_check', data= {'j_username': username, 'j_password': password})
         response = self.session.get(self.preffix_url + 'index.jsp')
-        self.GetUserId()
+        self.get_user_id()
         
 
-    def Configure_permissions (self, addBench, addJob, addSolver, addSpace, addUser, removeBench, removeJob, removeSolver, removeSpace, removeUser, isLeader):
+    def configure_permissions (self, addBench, addJob, addSolver, addSpace, addUser, removeBench, removeJob, removeSolver, removeSpace, removeUser, isLeader):
         """
         Provides permissions for post requests
         All arguments are on/off string type
@@ -40,7 +40,7 @@ class WebManager(object):
                 'isLeader':isLeader}
 
 #in progress
-    def Add_space (self, parent_id, name, desc):
+    def add_space (self, parent_id, name, desc):
         payload = {'parent': parent_id,
                    'name': name,
                    'desc': desc,
@@ -58,12 +58,12 @@ class WebManager(object):
         return {k: v for k, v in dict.items() if k not in keys}
 
 
-    def Logout(self):
+    def logout(self):
         response = self.session.post(self.preffix_url_for_services + 'services/session/logout')
         #print(response.text)
 
 # in progress
-    def GetSolvers(self):
+    def get_solvers(self):
         paramlist = {'id': self.userId}
         response = self.session.get(self.preffix_url + '/details/user.jsp', params=paramlist)
         soup = BeautifulSoup(response.content, 'html.parser', parse_only=SoupStrainer('a'))
@@ -72,14 +72,14 @@ class WebManager(object):
                 print(link['href'])
 
 
-    def RemoveSpaces(self, list):
+    def remove_spaces(self, list):
         response = self.session.post(self.preffix_url_for_services + 'services/remove/subspace', data= {'selectedIds[]': list, 'recyclePrims': 'false'})
         print(response.text)
 
-    def IsSpaceVisible(self, spaceId):
+    def is_space_visible(self, spaceId):
         response = self.session.post(self.preffix_url_for_services + f'services/space/isSpacePublic/{spaceId}')
         print(response.text,'\n',response.url)
 
-    def EditSpaceVisibility(self, spaceId, hierarchy, makePublic):
+    def edit_space_visibility(self, spaceId, hierarchy, makePublic):
         response = self.session.post(self.preffix_url_for_services + f'services/space/changePublic/{spaceId}/{hierarchy}/{makePublic}')
         print(response.text)
