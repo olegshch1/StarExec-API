@@ -101,17 +101,28 @@ class WebManager(object):
         paramlist = {'type': 'space', 'id': id, 'includesolvers': include_solvers, 'includebenchmarks': include_benchmarks, 'hierarchy': hierarchy}
         response = self.session.get(self.preffix_url + 'download', params = paramlist, stream = True)
         response.raise_for_status()
-        with open(self.folder_for_downloads + f'space_{id}.zip', 'wb') as f:
-            for chunk in response.iter_content(chunk_size=1024*6):
-                #delete print
-                print('receiving')
+        with open(f'download_folder\space_{id}.zip', 'wb') as f:
+            for chunk in response.iter_content(10000000):                
                 f.write(chunk)
                 f.flush()
                 os.fsync(f.fileno())
         #delete print
         print('downloading is done')
 
+    def download_space_xml(self, id, include_attrs, benchmarks_updates, upid):
+        if benchmarks_updates == False: upid = -1
+        paramlist = {'type': 'spaceXML', 'id': id, 'includeattrs': include_attrs, 'updates': benchmarks_updates, 'upid': upid}      
+        response = self.session.get(self.preffix_url + 'download', params = paramlist, stream = True)
+        response.raise_for_status()
+        with open(f'download_folder\spaceXML_{id}.zip', 'wb') as f:
+            for chunk in response.iter_content(10000000):                
+                f.write(chunk)
+                f.flush()
+                os.fsync(f.fileno())
+        #delete print
+        print('downloading is done')
+# in progress
     def upload_space_xml(self, parent_space_id, file):
-        response = self.session.post(self.preffix_url + 'upload/space', files=file, params={'space':parent_space_id})
+        response = self.session.post(self.preffix_url + 'upload/space', files={'name': file}, params={'space':parent_space_id})
         # delete print
         print(response.text)

@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="files_for_testing\" />
+    <Folder Include="download_folder\" />
+    <Folder Include="upload_folder\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

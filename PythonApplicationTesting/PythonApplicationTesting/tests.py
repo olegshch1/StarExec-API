@@ -36,9 +36,14 @@ class TestWebManager(unittest.TestCase):
             self.assertEqual(previous, current)
 
     def test_downloading_space(self):
-        self.manager.download_space(self.manager.spaces_ids[0], True, True, True)
-        dir = os.listdir(self.manager.folder_for_downloads)
+        self.manager.download_space(self.manager.spaces_ids[0], True, False, False)
+        dir = os.listdir('download_folder')
         self.assertTrue(len(dir)>0)
+        #for file in dir:
+            #os.remove(os.path.abspath(file))
+
+    # def test_uploading_space(self):
+
 
 if __name__ == '__main__':
     unittest.main()
