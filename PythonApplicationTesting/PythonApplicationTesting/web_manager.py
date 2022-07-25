@@ -1,11 +1,13 @@
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
+import os
 
 class WebManager(object):
     """class provides StarExec API"""
     preffix_url = 'https://www.starexec.org/starexec/secure/'
     preffix_url_for_services = 'https://www.starexec.org/starexec/'
     spaces_ids = []
+    folder_for_downloads = ''
 
     def get_user_id(self):
         self.user_id = self.session.get(self.preffix_url_for_services + 'services/users/getid').text
@@ -21,7 +23,7 @@ class WebManager(object):
         response = self.session.get(self.preffix_url + 'index.jsp')
         self.get_user_id()
         
-
+# need to be modified
     def configure_permissions (self, add_bench, add_job, 
                                add_solver, add_space, 
                                add_user, remove_bench, 
@@ -99,10 +101,17 @@ class WebManager(object):
         paramlist = {'type': 'space', 'id': id, 'includesolvers': include_solvers, 'includebenchmarks': include_benchmarks, 'hierarchy': hierarchy}
         response = self.session.get(self.preffix_url + 'download', params = paramlist, stream = True)
         response.raise_for_status()
-        with open(f'space {id}.zip', 'wb') as f:
-            for chunk in response.iter_content(chunk_size=5000000000):
+        with open(self.folder_for_downloads + f'space_{id}.zip', 'wb') as f:
+            for chunk in response.iter_content(chunk_size=1024*6):
                 #delete print
                 print('receiving')
                 f.write(chunk)
+                f.flush()
+                os.fsync(f.fileno())
         #delete print
         print('downloading is done')
+
+    def upload_space_xml(self, parent_space_id, file):
+        response = self.session.post(self.preffix_url + 'upload/space', files=file, params={'space':parent_space_id})
+        # delete print
+        print(response.text)

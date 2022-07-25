@@ -1,4 +1,5 @@
 import unittest
+import os
 from web_manager import WebManager
 
 class TestWebManager(unittest.TestCase):
@@ -8,6 +9,7 @@ class TestWebManager(unittest.TestCase):
         f = open("Login_info.txt", 'r')
         username, password = f.readline().split()
         self.manager.spaces_ids = f.readline().split()
+        self.manager.folder_for_downloads = f.readline()
         f.close()
         self.manager.login(username, password)
 
@@ -32,6 +34,11 @@ class TestWebManager(unittest.TestCase):
             self.manager.edit_space_visibility(self.manager.spaces_ids[0], True, False)
             current = self.manager.is_space_visible(self.manager.spaces_ids[0])
             self.assertEqual(previous, current)
+
+    def test_downloading_space(self):
+        self.manager.download_space(self.manager.spaces_ids[0], True, True, True)
+        dir = os.listdir(self.manager.folder_for_downloads)
+        self.assertTrue(len(dir)>0)
 
 if __name__ == '__main__':
     unittest.main()
