@@ -18,11 +18,10 @@ def instructions():
           'exit\n')
 
 def loop():
-    f = open("Login_info.txt", 'r')
-    username, password = f.readline().split()
-    wm.spaces_ids = f.readline().split()
-    wm.folder_for_downloads = f.readline()
-    f.close()
+    with open("Login_info.txt", 'r') as f:
+        username, password = f.readline().split()
+        wm.spaces_ids = f.readline().split()
+        wm.folder_for_downloads = f.readline()
     wm.login(username, password)
 
     instructions()

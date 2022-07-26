@@ -115,10 +115,11 @@ class WebManager(object):
         response = self.session.get(self.preffix_url + 'download', params = paramlist, stream = True)
         response.raise_for_status()
         with open(f'download_folder\spaceXML_{id}.zip', 'wb') as f:
-            for chunk in response.iter_content(10000000):                
-                f.write(chunk)
-                f.flush()
-                os.fsync(f.fileno())
+            for chunk in response.iter_content(chunk_size=1024000):
+                if chunk:
+                    f.write(chunk)
+                    f.flush()
+                    os.fsync(f.fileno())
         #delete print
         print('downloading is done')
 # in progress
