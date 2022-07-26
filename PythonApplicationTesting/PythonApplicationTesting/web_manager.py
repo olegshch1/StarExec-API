@@ -124,6 +124,6 @@ class WebManager(object):
         print('downloading is done')
 # in progress
     def upload_space_xml(self, parent_space_id, file):
-        response = self.session.post(self.preffix_url + 'upload/space', files={'name': file}, params={'space':parent_space_id})
+        response = self.session.post(self.preffix_url + 'upload/space', files={'file': file}, data={'space':parent_space_id})
         # delete print
         print(response.text)
