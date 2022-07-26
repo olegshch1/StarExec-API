@@ -48,15 +48,15 @@ class WebManager(object):
                 'isLeader':is_leader}
 
 #in progress
-    def add_space (self, parent_id, name, desc):
+    def add_space (self, parent_id, name, desc, locked, users, solvers, benchmarks, sticky):
         payload = {'parent': parent_id,
                    'name': name,
                    'desc': desc,
-                   'locked':'false',
-                   'users': 'true',
-                   'solvers': 'true',
-                   'benchmarks': 'true',
-                   'sticky': 'false'}
+                   'locked':locked,
+                   'users': users,
+                   'solvers': solvers,
+                   'benchmarks': benchmarks,
+                   'sticky': sticky}
         response = self.session.post(self.preffix_url + 'add/space', data= payload.update(self.without_keys(self.permissions_dict, ['isLeader'])))
         #response = self.session.post(self.preffix_url + 'add/space', data= payload)
         #delete print
