@@ -30,7 +30,7 @@ def loop():
 
     while s != "exit":
         if s == 'AddSpace':
-            print(wm.add_space(*input('enter parent id, new name and description: ').split()))
+            wm.add_space(*input('enter parent id, new name and description: ').split())
 
         if s == 'Logout':
             wm.logout()
