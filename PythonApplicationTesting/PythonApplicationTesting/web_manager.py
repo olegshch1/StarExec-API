@@ -89,13 +89,9 @@ class WebManager(object):
                    'solvers': solvers,
                    'benchmarks': benchmarks,
                    'sticky': sticky}
-        #response = self.session.post(self.preffix_url + 'add/space', data= payload.update(self.without_keys(self.permissions_dict, ['isLeader'])))
         response = self.session.post(self.preffix_url + 'add/space', data= payload)
-        #response = self.session.post(self.preffix_url + 'add/space', data= payload)
         #delete print
-        print(response.text)
-        #delete print
-        print(response.url)
+        print(self.session.cookies.get_dict()['New_ID'])
 
     def without_keys(self, dict, keys):
         return {k: v for k, v in dict.items() if k not in keys}
