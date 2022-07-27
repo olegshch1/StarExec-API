@@ -30,9 +30,7 @@ def loop():
 
     while s != "exit":
         if s == 'AddSpace':
-            wm.configure_permissions('on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on')
-            parent_id, name, desc = input('enter parent id, new name and description: ').split()
-            print(wm.add_space(parent_id, name, desc))
+            print(wm.add_space(*input('enter parent id, new name and description: ').split()))
 
         if s == 'Logout':
             wm.logout()
@@ -46,12 +44,10 @@ def loop():
             wm.is_space_visible(space_id)
 
         if s == 'DownloadSpace':
-            space_id, solvs, benchs, hier = input('enter space id and bools for including solvers, benchs and hierarchy: ').split()
-            wm.download_space(space_id, solvs, benchs, hier)
+            wm.download_space(*input('enter space id and bools for including solvers, benchs and hierarchy: ').split())
 
-        if s == 'DownloadSpaceXML':
-            id, include_attrs, benchmarks_updates, upid = input('enter space id and bools for including attrs, updates and upid(optional from updates): ').split()
-            wm.download_space_xml(id, include_attrs, benchmarks_updates, upid)
+        if s == 'DownloadSpaceXML':            
+            wm.download_space_xml(*input('enter space id and bools for including attrs, updates and upid(optional from updates): ').split())
 
         if s == 'UploadSpaceXML':
             parent_id, space_id = input('enter parent_id and space_id: ').split()
@@ -59,8 +55,7 @@ def loop():
                 wm.upload_space_xml(parent_id, f)
 
         if s == 'EditSpaceVisibility':
-            space_id, hierarchy, makePublic = input('enter space id, hierarchy status and public status: ').split()
-            wm.edit_space_visibility(space_id, hierarchy, makePublic)
+            wm.edit_space_visibility(*input('enter space id, hierarchy status and public status: ').split())
 
         if s == 'GetSolvers':
             wm.get_solvers()

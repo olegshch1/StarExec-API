@@ -47,17 +47,50 @@ class WebManager(object):
                 'removeUser':remove_user, 
                 'isLeader':is_leader}
 
-#in progress
-    def add_space (self, parent_id, name, desc, locked, users, solvers, benchmarks, sticky):
+    def add_space (self, parent_id, 
+                   name, desc, 
+                   locked, users, 
+                   solvers, benchmarks, 
+                   sticky, add_bench, 
+                   add_job, add_solver, 
+                   add_space, add_user, 
+                   remove_bench, remove_job, 
+                   remove_solver, remove_space, 
+                   remove_user, is_leader):
+        """
+        Add space with bool params
+        """
+        
+        for var in {add_bench, 
+                   add_job, add_solver, 
+                   add_space, add_user, 
+                   remove_bench, remove_job, 
+                   remove_solver, remove_space, 
+                   remove_user}:
+            if var == True or var == 'true': var = 'on' 
+            if var == False or var == 'false': var = 'off' 
+
         payload = {'parent': parent_id,
                    'name': name,
                    'desc': desc,
+                   'addSolver':add_solver,
+                   'addBench':add_bench, 
+                   'addUser':add_user,
+                   'addSpace':add_space,
+                   'addJob':add_job, 
+                   'removeSolver':remove_solver,
+                   'removeBench':remove_bench,
+                   'removeUser':remove_user,
+                   'removeSpace':remove_space,
+                   'removeJob':remove_job,                                        
+                   #'isLeader':is_leader,
                    'locked':locked,
                    'users': users,
                    'solvers': solvers,
                    'benchmarks': benchmarks,
                    'sticky': sticky}
-        response = self.session.post(self.preffix_url + 'add/space', data= payload.update(self.without_keys(self.permissions_dict, ['isLeader'])))
+        #response = self.session.post(self.preffix_url + 'add/space', data= payload.update(self.without_keys(self.permissions_dict, ['isLeader'])))
+        response = self.session.post(self.preffix_url + 'add/space', data= payload)
         #response = self.session.post(self.preffix_url + 'add/space', data= payload)
         #delete print
         print(response.text)
