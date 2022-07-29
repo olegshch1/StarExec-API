@@ -155,3 +155,35 @@ class WebManager(object):
         response = self.session.post(self.preffix_url + 'upload/space', files={'file': file}, data={'space':parent_space_id})
         # delete print
         print(response.text)
+
+    def create_job(self, sid, name, desc, 
+                   preprocess, postprocess, queue, 
+                   wallclock_timeout, cpu_timeout, max_mem, 
+                   subscribe, traversal, pause, 
+                   seed, benchmarking_framework, results_interval, 
+                   save_other_output, suppress_timestamp, kill_delay, 
+                   soft_time_limit, run_choice):
+
+        payload={'sid':sid,	
+                 'name':name,
+                 'desc':desc,
+                 'preProcess':pre_process,
+                 'postProcess':post_process,
+                 'queue':queue,
+                 'wallclockTimeout':wallclock_timeout,
+                 'cpuTimeout':cpu_timeout,
+                 'maxMem':max_mem,
+                 'subscribe':subscribe,
+                 'traversal':traversal,
+                 'pause':pause,
+                 'seed':seed,
+                 'benchmarkingFramework':benchmarking_framework,
+                 'resultsInterval':results_interval,
+                 'saveOtherOutput':save_other_output,
+                 'suppressTimestamp':suppress_timestamp,
+                 'killDelay':kill_delay,
+                 'softTimeLimit':soft_time_limit,
+                 'runChoice':run_choice}
+
+        response = self.session.post(self.preffix_url + 'add/job', data=payload)
+        return self.session.cookies.get_dict()['New_ID']
