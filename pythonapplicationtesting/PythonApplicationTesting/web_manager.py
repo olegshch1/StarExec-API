@@ -156,19 +156,19 @@ class WebManager(object):
         # delete print
         print(response.text)
 
-    def create_job(self, sid, name, desc, traversal, solver_id, bench_list, configs=671423, run_choice='choose', bench_choice='runChosenFromSpace',
-                   preprocess=-1, postprocess=-1, queue=1, 
-                   wallclock_timeout=60, cpu_timeout=240, max_mem=60, 
-                   subscribe='no', pause='no', 
-                   seed=0, benchmarking_framework='RUNSOLVER', results_interval=0, 
-                   save_other_output=True, suppress_timestamp='no', kill_delay=0, 
-                   soft_time_limit=0, ):
+    def create_job(self, sid, name, desc, 
+                   preprocess, postprocess, queue, 
+                   wallclock_timeout, cpu_timeout, max_mem, 
+                   subscribe, traversal, pause, 
+                   seed, benchmarking_framework, results_interval, 
+                   save_other_output, suppress_timestamp, kill_delay, 
+                   soft_time_limit, run_choice):
 
         payload={'sid':sid,	
                  'name':name,
                  'desc':desc,
-                 'preProcess':preprocess,
-                 'postProcess':postprocess,
+                 'preProcess':pre_process,
+                 'postProcess':post_process,
                  'queue':queue,
                  'wallclockTimeout':wallclock_timeout,
                  'cpuTimeout':cpu_timeout,
@@ -183,11 +183,7 @@ class WebManager(object):
                  'suppressTimestamp':suppress_timestamp,
                  'killDelay':kill_delay,
                  'softTimeLimit':soft_time_limit,
-                 'runChoice':run_choice,
-                 'benchChoice':bench_choice,
-                 'solver':solver_id,
-                 'configs':configs,
-                 'bench':bench_list}
+                 'runChoice':run_choice}
 
         response = self.session.post(self.preffix_url + 'add/job', data=payload)
         return self.session.cookies.get_dict()['New_ID']
