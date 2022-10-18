@@ -25,11 +25,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Job.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="StarExec_API_console.py" />
     <Compile Include="tests.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="web_manager.py">
+    <Compile Include="WebManager.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

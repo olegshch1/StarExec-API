@@ -191,3 +191,7 @@ class WebManager(object):
 
         response = self.session.post(self.preffix_url + 'add/job', data=payload)
         return self.session.cookies.get_dict()['New_ID']
+
+    def download_job_output(self, id, since):
+        paramlist = {'id':id, }
+        self.session.get(self.preffix_url + 'download', params = paramlist)

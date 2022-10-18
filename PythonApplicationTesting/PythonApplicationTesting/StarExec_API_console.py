@@ -1,8 +1,8 @@
 import os
 import requests
-from web_manager import WebManager
+from web_manager import Web_Manager
 
-wm = WebManager()
+wm = Web_Manager()
 
 def instructions():
     print('Available commands:\n',
