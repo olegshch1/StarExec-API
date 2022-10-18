@@ -3,5 +3,7 @@ class Job(object):
     id
     solver_path
     benchmarks_path
+    status
+
 
 

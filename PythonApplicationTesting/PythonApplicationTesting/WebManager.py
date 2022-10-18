@@ -148,8 +148,7 @@ class WebManager(object):
                     f.write(chunk)
                     f.flush()
                     os.fsync(f.fileno())
-        #delete print
-        print('downloading is done')
+
 # in progress
     def upload_space_xml(self, parent_space_id, file):
         response = self.session.post(self.preffix_url + 'upload/space', files={'file': file}, data={'space':parent_space_id})
@@ -192,6 +191,13 @@ class WebManager(object):
         response = self.session.post(self.preffix_url + 'add/job', data=payload)
         return self.session.cookies.get_dict()['New_ID']
 
-    def download_job_output(self, id, since):
-        paramlist = {'id':id, }
-        self.session.get(self.preffix_url + 'download', params = paramlist)
+    def download_job_output(self, id):
+        paramlist = {'type':'j_outputs', 'id':id}
+        response = self.session.get(self.preffix_url + 'download', params = paramlist, stream = True)
+        response.raise_for_status()
+        with open(f'download_folder\output_{id}.zip', 'wb') as f:
+            for chunk in response.iter_content(chunk_size=50000):
+                if chunk:
+                    f.write(chunk)
+                    f.flush()
+                    os.fsync(f.fileno())
