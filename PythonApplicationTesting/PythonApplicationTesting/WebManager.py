@@ -111,8 +111,6 @@ class WebManager(object):
 
     def remove_spaces(self, list):
         response = self.session.post(self.preffix_url_for_services + 'services/remove/subspace', data= {'selectedIds[]': list, 'recyclePrims': 'false'})
-        #delete print
-        print(response.text)
 
     def is_space_visible(self, space_id):
         response = self.session.post(self.preffix_url_for_services + f'services/space/isSpacePublic/{space_id}')
@@ -201,8 +199,10 @@ class WebManager(object):
                     f.write(chunk)
                     f.flush()
                     os.fsync(f.fileno())
+
+    def create_and_download()
 # in progress
-    def upload_benchmark_archive(self, sid, source='local'):
+#    def upload_benchmark_archive(self, sid, source='local'):
 
 # in progress
-    def upload_solver_archive(self, sid, path):
+#    def upload_solver_archive(self, sid, path):

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Login_info.txt" />
+    <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="files_for_testing\" />
