@@ -202,4 +202,7 @@ class WebManager(object):
                     f.flush()
                     os.fsync(f.fileno())
 # in progress
-    def upload_benchmark_archive(self, sid, source='local')
+    def upload_benchmark_archive(self, sid, source='local'):
+
+# in progress
+    def upload_solver_archive(self, sid, path):
