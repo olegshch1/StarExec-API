@@ -201,3 +201,5 @@ class WebManager(object):
                     f.write(chunk)
                     f.flush()
                     os.fsync(f.fileno())
+# in progress
+    def upload_benchmark_archive(self, sid, source='local')
