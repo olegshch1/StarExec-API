@@ -32,9 +32,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="StarExec_API_console.py" />
-    <Compile Include="tests.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="WebManager.py">
       <SubType>Code</SubType>
     </Compile>
