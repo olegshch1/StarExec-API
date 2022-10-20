@@ -5,7 +5,8 @@
     <ProjectGuid>abd4c5d0-2c40-42db-ace1-467fc023645a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>StarExec_API_console.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,7 +32,6 @@
     <Compile Include="Job.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StarExec_API_console.py" />
     <Compile Include="WebManager.py">
       <SubType>Code</SubType>
     </Compile>
