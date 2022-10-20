@@ -34,7 +34,7 @@
     <Compile Include="Job.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WebManager.py">
+    <Compile Include="web_manager.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
