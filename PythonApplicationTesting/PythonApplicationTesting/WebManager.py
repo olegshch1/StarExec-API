@@ -200,7 +200,7 @@ class WebManager(object):
                     f.flush()
                     os.fsync(f.fileno())
 
-    def create_and_download()
+#    def create_and_download():
 # in progress
 #    def upload_benchmark_archive(self, sid, source='local'):
 
